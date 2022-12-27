@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/nav_device">
+
+    <!-- id与BottomNavigationView下的bottom_nav_menu中的item绑定
+         tools:layout与一个布局绑定，表示这个fragment使用这个布局     -->
+    <fragment
+        android:id="@+id/nav_device"
+        tools:layout="@layout/fragment_device"/>
+
+    <fragment
+        android:id="@+id/nav_data"
+        tools:layout="@layout/fragment_data"/>
+</navigation>
