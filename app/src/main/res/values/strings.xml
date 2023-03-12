@@ -4,4 +4,7 @@
     <!-- button_nav_menu.xml -->
     <string name="nav_device">设备</string>
     <string name="nav_data">数据</string>
+
+    <!-- device_item.xml -->
+    <string name="device_image_description">device icon</string>
 </resources>

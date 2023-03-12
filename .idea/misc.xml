@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/Android/AndroidBluetoothApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.48020833333333335" />
+        <entry key="..\:/Projects/Android/AndroidBluetoothApp/app/src/main/res/drawable/scan_button.xml" value="0.6739583333333333" />
+        <entry key="..\:/Projects/Android/AndroidBluetoothApp/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/Projects/Android/AndroidBluetoothApp/app/src/main/res/layout/device_item.xml" value="0.5390625" />
+        <entry key="..\:/Projects/Android/AndroidBluetoothApp/app/src/main/res/layout/fragment_device.xml" value="0.5" />
         <entry key="..\:/Projects/Android20/AndroidBluetoothApp/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
         <entry key="..\:/Projects/Android20/AndroidBluetoothApp/app/src/main/res/layout/fragement_data.xml" value="0.36614583333333334" />
         <entry key="..\:/Projects/Android20/AndroidBluetoothApp/app/src/main/res/layout/fragement_device.xml" value="0.36614583333333334" />
