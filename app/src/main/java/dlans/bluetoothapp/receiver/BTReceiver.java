@@ -5,8 +5,10 @@ import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 
 import dlans.bluetoothapp.adapters.DeviceAdapter;
+import dlans.bluetoothapp.service.ScanService;
 import dlans.bluetoothapp.utils.LogUtil;
 
 public class BTReceiver extends BroadcastReceiver {
@@ -34,6 +36,15 @@ public class BTReceiver extends BroadcastReceiver {
                 break;
             case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
                 LogUtil.d(TAG, "finish found");
+                // 在经典蓝牙扫描完成后开启服务来扫描BLE
+                Intent intent1 = new Intent(context, ScanService.class);
+                // Android O之后的开启服务的API与之前的不同
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(intent1);
+                }
+                else {
+                    context.startService(intent1);
+                }
             default:
                 break;
         }

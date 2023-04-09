@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -87,7 +88,8 @@ public class DeviceFragment extends Fragment {
             if (bluetoothAdapter.isDiscovering()) {
                 bluetoothAdapter.cancelDiscovery();
                 LogUtil.d(TAG, "is discovering");
-            } else {
+            }
+            else {
                 bluetoothAdapter.startDiscovery();
                 LogUtil.d(TAG, "process start");
             }

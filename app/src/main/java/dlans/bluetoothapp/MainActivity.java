@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         if (bluetoothAdapter == null) {
             Toast.makeText(this, "此设备上没有可用的蓝牙设备！", Toast.LENGTH_LONG).show();
         }
+        /* 检查是否支持BLE */
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, "设备不支持低功耗蓝牙", Toast.LENGTH_LONG).show();
+        }
         /* 检查蓝牙是否打开，如果没有则申请打开 */
         if (bluetoothAdapter != null && !bluetoothAdapter.isEnabled()) {
             /* 注册一个Activity启动器 */
