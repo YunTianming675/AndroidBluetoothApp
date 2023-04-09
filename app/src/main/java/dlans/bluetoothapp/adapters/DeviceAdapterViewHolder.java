@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothSocket;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,13 +34,14 @@ public class DeviceAdapterViewHolder extends RecyclerView.ViewHolder{
     private static final UUID READ_UUID = UUID.fromString("0000ffe2-0000-1000-8000-00805f9b34fb");
     private BluetoothSocket bluetoothSocket = null;
     private List<BluetoothGattService> serviceList = null;
-    private BluetoothGatt bluetoothGatt; // BLE GATT
-    private BluetoothGattService bluetoothGattService = null; // BLE读写服务
-    private BluetoothGattCharacteristic writeCharacteristic = null; // 写特征
-    private BluetoothGattCharacteristic readCharacteristic = null; // 读特征
     private ImageView deviceIcon;
     private TextView deviceName;
     private TextView deviceAddress;
+
+    public static BluetoothGatt bluetoothGatt = null; // BLE GATT
+    public static BluetoothGattService bluetoothGattService = null; // BLE读写服务
+    public static BluetoothGattCharacteristic writeCharacteristic = null; // 写特征
+    public static BluetoothGattCharacteristic readCharacteristic = null; // 读特征
 
     private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
         @Override
@@ -91,6 +94,8 @@ public class DeviceAdapterViewHolder extends RecyclerView.ViewHolder{
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             super.onCharacteristicChanged(gatt, characteristic);
             LogUtil.d(TAG, "onCharacteristicChanged");
+            byte[] data = characteristic.getValue();
+            LogUtil.d(TAG, "Get data: " + Arrays.toString(data));
         }
     };
 
@@ -133,12 +138,31 @@ public class DeviceAdapterViewHolder extends RecyclerView.ViewHolder{
             LogUtil.d(TAG, "---------------------------------------------------");
         }
         // 先尝试通过预设的UUID进行通信
+        bluetoothGatt = gatt;
         bluetoothGattService = gatt.getService(SERVICE_UUID);
         writeCharacteristic = bluetoothGattService.getCharacteristic(WRITE_UUID);
         readCharacteristic = bluetoothGattService.getCharacteristic(READ_UUID);
         byte[] data = "Android: OK".getBytes();
         writeCharacteristic.setValue(data);
         gatt.writeCharacteristic(writeCharacteristic);
+        // 检查特征是否支持监听
+        int properties = readCharacteristic.getProperties();
+        if ((properties & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0) {
+            LogUtil.d(TAG, "read support notify");
+            // 读特征支持监听，则设置监听
+            gatt.setCharacteristicNotification(readCharacteristic, true);
+            List<BluetoothGattDescriptor> descriptors = writeCharacteristic.getDescriptors();
+            for (BluetoothGattDescriptor descriptor : descriptors) {
+                descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                bluetoothGatt.writeDescriptor(descriptor);
+            }
+        }
+        else if ((properties & BluetoothGattCharacteristic.PROPERTY_INDICATE) != 0) {
+            LogUtil.d(TAG, "read support indicate");
+        }
+        else {
+            LogUtil.d(TAG, "read not support notify or indicate");
+        }
     }
 
     private void onItemClick(int position) {
