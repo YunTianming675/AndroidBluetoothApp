@@ -95,7 +95,11 @@ public class DeviceAdapterViewHolder extends RecyclerView.ViewHolder{
             super.onCharacteristicChanged(gatt, characteristic);
             LogUtil.d(TAG, "onCharacteristicChanged");
             byte[] data = characteristic.getValue();
-            LogUtil.d(TAG, "Get data: " + Arrays.toString(data));
+            if (data.length < 10) {
+                LogUtil.d(TAG, "Get data: " + Arrays.toString(data));
+            } else {
+                LogUtil.d(TAG, "Get data, length = " + data.length);
+            }
         }
     };
 
