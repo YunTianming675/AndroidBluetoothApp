@@ -50,15 +50,6 @@ public class LineChartManager implements OnChartValueSelectedListener {
             if (set == null) {
                 set = createSet();
             }
-//            for (i = 1; i <= data.length; i++) {
-//                lineData.addEntry(new Entry(set.getEntryCount(), (float)data[i-1]), 0);
-//                if ((i % 10) == 0) {
-//                    lineData.notifyDataChanged();
-//                    lineChart.notifyDataSetChanged();
-//                    lineChart.setVisibleXRangeMaximum(2000);
-//                    lineChart.moveViewToX(lineData.getEntryCount());
-//                }
-//            }
             lineData.addEntry(new Entry(set.getEntryCount(), (float) (Math.random() * 40 + 30)), 0);
             lineData.notifyDataChanged();
             lineChart.notifyDataSetChanged();
@@ -121,19 +112,5 @@ public class LineChartManager implements OnChartValueSelectedListener {
         rightAxis.setEnabled(true);
     }
 
-    public void addData(int[] data) {
-        if (thread != null) {
-            thread.interrupt();
-        }
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                addEntry(data);
-            }
-        };
-
-        thread = new Thread(()->{
-        });
-        addEntry(data);
-    }
+    public void addData(int[] data) {}
 }

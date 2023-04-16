@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 
 import dlans.bluetoothapp.databinding.FragmentDataBinding;
+import dlans.bluetoothapp.utils.BTManager;
 import dlans.bluetoothapp.utils.LogUtil;
 
 public class DataFragment extends Fragment {
@@ -44,15 +44,8 @@ public class DataFragment extends Fragment {
         binding = FragmentDataBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        getParentFragmentManager().setFragmentResultListener("key", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                String sResult = result.getString("bundleKey");
-                LogUtil.d(TAG, "sResult = " + sResult);
-            }
-        });
-
         lineChartManager = new LineChartManager(binding.lineChart);
+        BTManager.getInstance().setReadHandler(handler, GET_DATA);
 
         return root;
     }
