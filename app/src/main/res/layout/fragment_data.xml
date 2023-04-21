@@ -14,4 +14,45 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.05"/>
 
+    <TextView
+        android:id="@+id/text_hr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/heart_rate_txt"
+        android:textSize="12sp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintTop_toBottomOf="@id/line_chart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/hr_data"/>
+
+    <TextView
+        android:id="@+id/hr_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/line_chart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_hr"/>
+
+    <TextView
+        android:id="@+id/text_spo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/spo2_txt"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/line_chart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/hr_data"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/spo2_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/line_chart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_spo2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

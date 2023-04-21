@@ -15,21 +15,25 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.Arrays;
+
 import dlans.bluetoothapp.utils.GlobalContext;
 import dlans.bluetoothapp.utils.LogUtil;
 
 public class LineChartManager implements OnChartValueSelectedListener {
 
     private static final String TAG = "LineChartManager";
+    private int MIN_DATA = 0;
+    private int MAX_DATA = 100;
     private LineChart lineChart;
     private Typeface typeface;
-    private Thread thread;
 
     private LineDataSet createSet() {
         LineDataSet set = new LineDataSet(null, "Dynamic Data");
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
         set.setCircleColor(Color.WHITE);
+        set.setDrawCircles(false);
         set.setLineWidth(2f);
         set.setCircleRadius(4f);
         set.setFillAlpha(65);
@@ -42,18 +46,20 @@ public class LineChartManager implements OnChartValueSelectedListener {
         return set;
     }
 
-    private void addEntry(int[] data) {
+    private void addEntry(byte[] data) {
         LineData lineData = lineChart.getData();
-        int i;
         if (lineData != null) {
             ILineDataSet set = lineData.getDataSetByIndex(0);
             if (set == null) {
                 set = createSet();
+                lineData.addDataSet(set);
             }
-            lineData.addEntry(new Entry(set.getEntryCount(), (float) (Math.random() * 40 + 30)), 0);
-            lineData.notifyDataChanged();
+            for (byte b : data) {
+                lineData.addEntry(new Entry(set.getEntryCount(), b), 0);
+                lineData.notifyDataChanged();
+            }
             lineChart.notifyDataSetChanged();
-            lineChart.setVisibleXRangeMaximum(120);
+            lineChart.setVisibleXRangeMaximum(300);
             lineChart.moveViewToX(lineData.getEntryCount());
         } else {
             throw new NullPointerException("lineChart.getData() return null");
@@ -104,13 +110,28 @@ public class LineChartManager implements OnChartValueSelectedListener {
         YAxis leftAxis = this.lineChart.getAxisLeft();
         leftAxis.setTypeface(typeface);
         leftAxis.setTextColor(Color.WHITE);
-        leftAxis.setAxisMaximum(20f);
-        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMaximum(70f);
+        leftAxis.setAxisMinimum(40f);
         leftAxis.setDrawGridLines(true);
 
         YAxis rightAxis = this.lineChart.getAxisRight();
         rightAxis.setEnabled(true);
     }
 
-    public void addData(int[] data) {}
+    public void addData(byte[] data) {
+        LogUtil.d(TAG, "addData");
+        byte[] d = Arrays.copyOf(data, data.length);
+        Arrays.sort(d);
+        int minData = d[0];
+        int maxData = d[d.length-1];
+        if (MIN_DATA < minData) {
+            MIN_DATA = minData;
+            lineChart.getAxisLeft().setAxisMinimum((float) MIN_DATA);
+        }
+        if (MAX_DATA > maxData) {
+            MAX_DATA = maxData;
+            lineChart.getAxisLeft().setAxisMaximum((float) MAX_DATA);
+        }
+        addEntry(data);
+    }
 }

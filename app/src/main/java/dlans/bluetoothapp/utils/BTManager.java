@@ -96,7 +96,7 @@ public class BTManager {
             if (data.length == 0) {
                 LogUtil.w(TAG, "No data");
             } else if (data.length <= 10) {
-                LogUtil.d(TAG, "Get data: + " + Arrays.toString(data));
+                LogUtil.d(TAG, "Get data: " + Arrays.toString(data));
             } else {
                 LogUtil.d(TAG, "Get data, length = " + data.length);
             }
