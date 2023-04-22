@@ -48,17 +48,16 @@ public class DataFragment extends Fragment {
 
     private void onGetData(@NonNull Message msg) {
         byte[] data = (byte[]) msg.obj;
-        byte[] b = Arrays.copyOfRange(data, 0, 3);
-        byte[] b1 = Arrays.copyOfRange(data, 0, 5);
-        byte[] b2 = {'h', 'r', ':'};
-        byte[] b3 = {'s', 'p', 'o', '2', ':'};
+        byte[] b = Arrays.copyOfRange(data, 0, 6);
+        byte[] b2 = {11, 12, 13, 11, 12, 13};
+        byte[] b3 = {21, 22, 23, 21, 22, 23};
         try {
-            if (Arrays.equals(b, b2)) {
-                byte[] b4 = Arrays.copyOfRange(data,3, data.length);
-                hrData.setText(new String(b4));
-            } else if (Arrays.equals(b1, b3)) {
-                byte[] b4 = Arrays.copyOfRange(data, 5, data.length);
-                spo2Data.setText(new String(b4));
+            if (data.length < 10) {
+                if (Arrays.equals(b, b2)) {
+                    hrData.setText(String.valueOf(data[data.length-1]));
+                } else if (Arrays.equals(b, b3)) {
+                    spo2Data.setText(String.valueOf(data[data.length-1]));
+                }
             } else {
                 lineChartManager.addData(data);
             }
