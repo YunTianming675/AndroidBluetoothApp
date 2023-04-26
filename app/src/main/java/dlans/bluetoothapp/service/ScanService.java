@@ -13,11 +13,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
 import dlans.bluetoothapp.R;
 import dlans.bluetoothapp.adapters.DeviceAdapter;
+import dlans.bluetoothapp.utils.GlobalContext;
 import dlans.bluetoothapp.utils.LogUtil;
 
 public class ScanService extends Service {
@@ -70,6 +72,7 @@ public class ScanService extends Service {
         @Override
         public void onFinish() {
             scanner.stopScan(scanCallback);
+            Toast.makeText(GlobalContext.getContext(), "scan finish", Toast.LENGTH_LONG).show();
             stopSelf();
         }
     };
