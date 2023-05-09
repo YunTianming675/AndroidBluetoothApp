@@ -12,7 +12,7 @@
         android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.9" />
 
     <TextView
         android:id="@+id/text_hr"
@@ -20,46 +20,83 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:text="@string/heart_rate_txt"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/hr_data"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line_chart" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/line_chart"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0.5"/>
 
     <TextView
         android:id="@+id/hr_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/text_hr"
-        app:layout_constraintTop_toBottomOf="@id/line_chart" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/line_chart"
+        app:layout_constraintHorizontal_bias="0.1"/>
 
     <TextView
         android:id="@+id/text_spo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/spo2_txt"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/line_chart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/hr_data"
-        app:layout_constraintTop_toBottomOf="@id/line_chart" />
+        app:layout_constraintStart_toStartOf="@id/text_hr"
+        app:layout_constraintTop_toBottomOf="@id/text_hr"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.5"/>
 
     <TextView
         android:id="@+id/spo2_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/text_spo2"
-        app:layout_constraintTop_toBottomOf="@id/line_chart" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/hr_data"
+        app:layout_constraintBottom_toTopOf="@id/line_chart"
+        app:layout_constraintStart_toStartOf="@id/hr_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"/>
+
+    <TextView
+        android:id="@+id/text_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temp_txt"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/text_spo2"
+        app:layout_constraintBottom_toTopOf="@id/line_chart"
+        app:layout_constraintStart_toStartOf="@id/text_spo2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"/>
+
+    <TextView
+        android:id="@+id/temp_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/spo2_data"
+        app:layout_constraintBottom_toTopOf="@id/line_chart"
+        app:layout_constraintStart_toStartOf="@id/spo2_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6"/>
+        app:layout_constraintGuide_percent="0.8"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

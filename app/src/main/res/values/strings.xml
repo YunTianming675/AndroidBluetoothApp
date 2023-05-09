@@ -11,4 +11,5 @@
     <!-- fragment_data.xml -->
     <string name="heart_rate_txt">HeartRate: </string>
     <string name="spo2_txt">SpO2: </string>
+    <string name="temp_txt">Temperature:</string>
 </resources>

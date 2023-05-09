@@ -3,6 +3,9 @@ package dlans.bluetoothapp.adapters;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,14 +26,33 @@ public class DeviceAdapterViewHolder extends RecyclerView.ViewHolder{
 
     private static final String TAG = "DeviceAdapterViewHolder";
     private static final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final int CONNECT_SUCCESS = 0;
+    private static final int CONNECT_FAILURE = 1;
     private BluetoothSocket bluetoothSocket = null;
     private ImageView deviceIcon;
     private TextView deviceName;
     private TextView deviceAddress;
 
+    private final Handler handler = new Handler(Looper.myLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case CONNECT_SUCCESS:
+                    String name = (String) msg.obj;
+                    Toast.makeText(GlobalContext.getContext(), "connect to: " + name, Toast.LENGTH_LONG).show();
+                    break;
+                case CONNECT_FAILURE:
+                    Toast.makeText(GlobalContext.getContext(), "connect error", Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     public DeviceAdapterViewHolder(@NonNull View itemView) {
         super(itemView);
-        deviceIcon = itemView.findViewById(R.id.device_icon);
         deviceName = itemView.findViewById(R.id.device_name);
         deviceAddress = itemView.findViewById(R.id.device_address);
 
@@ -71,16 +93,17 @@ public class DeviceAdapterViewHolder extends RecyclerView.ViewHolder{
                         }
                     }
                     LogUtil.d(TAG, "connect status: " + bluetoothSocket.isConnected());
+                    Message message = Message.obtain();
+                    message.what = CONNECT_SUCCESS;
+                    if (bluetoothDevice.getName() == null) {
+                        message.obj = bluetoothDevice.getAddress();
+                    } else {
+                        message.obj = bluetoothDevice.getName();
+                    }
+                    handler.sendMessage(message);
                 }).start();
             } catch (IOException e) {
                 LogUtil.e(TAG, "Can't create insecure RF comm socket");
-            }
-            if (bluetoothSocket.isConnected()) {
-                if (bluetoothDevice.getName() != null) {
-                    Toast.makeText(GlobalContext.getContext(), "connect to " + bluetoothDevice.getName(), Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(GlobalContext.getContext(), "Connect to " + bluetoothDevice.getAddress(), Toast.LENGTH_LONG).show();
-                }
             }
         }
     }

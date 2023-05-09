@@ -28,6 +28,7 @@ public class DataFragment extends Fragment {
     private LineChartManager lineChartManager = null;
     private TextView hrData = null;
     private TextView spo2Data = null;
+    private TextView tempData = null;
 
     public static final int GET_DATA = 1;
 
@@ -76,9 +77,11 @@ public class DataFragment extends Fragment {
         lineChartManager = new LineChartManager(binding.lineChart);
         hrData = binding.hrData;
         spo2Data = binding.spo2Data;
+        tempData = binding.tempData;
 
         hrData.setText("---");
         spo2Data.setText("---");
+        tempData.setText("---");
 
         BTManager.getInstance().setReadHandler(handler, GET_DATA);
 
@@ -90,6 +93,7 @@ public class DataFragment extends Fragment {
         super.onDestroyView();
         hrData.setText("---");
         spo2Data.setText("---");
+        tempData.setText("---");
         binding = null;
     }
 }

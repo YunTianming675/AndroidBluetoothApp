@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(mainBinding.navView, navController);
 
         actionBar = getSupportActionBar();
+        actionBar.setTitle("生理参数监测");
 
         /* 获取蓝牙适配器 */
         final BluetoothManager bluetoothManager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);
