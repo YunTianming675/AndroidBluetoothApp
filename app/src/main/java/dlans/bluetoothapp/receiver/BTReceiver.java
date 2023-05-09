@@ -38,8 +38,8 @@ public class BTReceiver extends BroadcastReceiver {
                 LogUtil.d(TAG, "finish found");
                 // 在经典蓝牙扫描完成后开启服务来扫描BLE
                 Intent intent1 = new Intent(context, ScanService.class);
-                // Android O之后的开启服务的API与之前的不同
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                /* Android O的开启服务的API与之前的不同 */
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1) {
                     context.startForegroundService(intent1);
                 }
                 else {

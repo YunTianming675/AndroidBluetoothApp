@@ -101,7 +101,7 @@ public class ScanService extends Service {
     public void onCreate() {
         super.onCreate();
         LogUtil.d(TAG, "onCreate");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1) {
             // Android O以上版本需要在服务启动后的5s内设为前台服务，否则将被系统终止
             createNotificationChannel();
             startForeground(NOTIFICATION_ID, buildNotification());
