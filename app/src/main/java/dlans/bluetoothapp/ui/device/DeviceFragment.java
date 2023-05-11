@@ -82,7 +82,7 @@ public class DeviceFragment extends Fragment {
         /* 从binding获取ImageButton对象并设置监听 */
         scanButton = binding.scanButton;
         scanButton.setOnClickListener(view -> {
-            Toast.makeText(GlobalContext.getContext(), "start scan, please wait", Toast.LENGTH_LONG).show();
+            Toast.makeText(GlobalContext.getContext(), "开始扫描，请等待扫描完成", Toast.LENGTH_LONG).show();
             final RotateAnimation animation = new RotateAnimation(0.0f, 180.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
             animation.setDuration(500);
             scanButton.startAnimation(animation);

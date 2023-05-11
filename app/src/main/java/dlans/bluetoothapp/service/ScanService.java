@@ -72,7 +72,7 @@ public class ScanService extends Service {
         @Override
         public void onFinish() {
             scanner.stopScan(scanCallback);
-            Toast.makeText(GlobalContext.getContext(), "scan finish", Toast.LENGTH_LONG).show();
+            Toast.makeText(GlobalContext.getContext(), "扫描完成", Toast.LENGTH_LONG).show();
             stopSelf();
         }
     };

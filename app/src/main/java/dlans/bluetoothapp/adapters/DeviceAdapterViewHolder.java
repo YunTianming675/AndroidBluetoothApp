@@ -40,10 +40,10 @@ public class DeviceAdapterViewHolder extends RecyclerView.ViewHolder{
             switch (msg.what) {
                 case CONNECT_SUCCESS:
                     String name = (String) msg.obj;
-                    Toast.makeText(GlobalContext.getContext(), "connect to: " + name, Toast.LENGTH_LONG).show();
+                    Toast.makeText(GlobalContext.getContext(), "连接至：" + name, Toast.LENGTH_LONG).show();
                     break;
                 case CONNECT_FAILURE:
-                    Toast.makeText(GlobalContext.getContext(), "connect error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(GlobalContext.getContext(), "连接失败！", Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
