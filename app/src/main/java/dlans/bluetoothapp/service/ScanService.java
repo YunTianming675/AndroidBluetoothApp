@@ -13,11 +13,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
 import dlans.bluetoothapp.R;
 import dlans.bluetoothapp.adapters.DeviceAdapter;
+import dlans.bluetoothapp.utils.GlobalContext;
 import dlans.bluetoothapp.utils.LogUtil;
 
 public class ScanService extends Service {
@@ -70,6 +72,7 @@ public class ScanService extends Service {
         @Override
         public void onFinish() {
             scanner.stopScan(scanCallback);
+            Toast.makeText(GlobalContext.getContext(), "扫描完成", Toast.LENGTH_LONG).show();
             stopSelf();
         }
     };
@@ -98,7 +101,7 @@ public class ScanService extends Service {
     public void onCreate() {
         super.onCreate();
         LogUtil.d(TAG, "onCreate");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1) {
             // Android O以上版本需要在服务启动后的5s内设为前台服务，否则将被系统终止
             createNotificationChannel();
             startForeground(NOTIFICATION_ID, buildNotification());

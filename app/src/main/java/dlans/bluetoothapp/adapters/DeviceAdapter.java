@@ -35,12 +35,6 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapterViewHolder>
     public void onBindViewHolder(@NonNull DeviceAdapterViewHolder holder, int position) {
         /* 获取item并设置内容 */
         BluetoothDevice bluetoothDevice = deviceList.get(position);
-        if (bluetoothDevice.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
-            holder.getDeviceIcon().setImageResource(R.drawable.bluetooth_le);
-        }
-        else {
-            holder.getDeviceIcon().setImageResource(R.drawable.bluetooth);
-        }
         holder.getDeviceName().setText(bluetoothDevice.getName());
         holder.getDeviceAddress().setText(bluetoothDevice.getAddress());
     }

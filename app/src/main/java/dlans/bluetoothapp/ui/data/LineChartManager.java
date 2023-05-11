@@ -87,7 +87,7 @@ public class LineChartManager implements OnChartValueSelectedListener {
         // enable touch gestures
         this.lineChart.setTouchEnabled(true);
         this.lineChart.setPinchZoom(true);
-        this.lineChart.setBackgroundColor(Color.LTGRAY);
+        this.lineChart.setBackgroundColor(Color.WHITE);
 
         LineData lineData = new LineData();
         lineData.setValueTextColor(Color.WHITE);
