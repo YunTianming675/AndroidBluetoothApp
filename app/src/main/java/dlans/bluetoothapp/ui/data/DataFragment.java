@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import dlans.bluetoothapp.databinding.FragmentDataBinding;
@@ -49,24 +50,46 @@ public class DataFragment extends Fragment {
 
     private void onGetData(@NonNull Message msg) {
         byte[] data = (byte[]) msg.obj;
-        byte[] b = Arrays.copyOfRange(data, 0, 6);
-        byte[] b2 = {11, 12, 13, 11, 12, 13};
-        byte[] b3 = {21, 22, 23, 21, 22, 23};
-        try {
-            if (data.length < 10) {
-                if (Arrays.equals(b, b2)) {
-                    hrData.setText(String.valueOf(data[data.length-1]));
-                } else if (Arrays.equals(b, b3)) {
-                    spo2Data.setText(String.valueOf(data[data.length-1]));
+        byte[] start = {83, 116, 97, 114, 116, 13, 10};
+        byte[] b = Arrays.copyOf(data, start.length);
+        byte[] b1 = Arrays.copyOfRange(data, start.length, data.length);
+        ArrayList<Integer> list = new ArrayList<>();
+        int temp = 0;
+        int count = 0;
+
+        if (Arrays.equals(b, start)) {
+            for (int i = 0; i < b1.length; i++) {
+                if (b1[i] != 45) {
+                    count++;
+                } else {
+                    int c = count;
+                    for (int k = 0; k < count; k++) {
+                        byte b2 = b1[i-c];
+                        b2 -= 48;
+                        temp += b2 * Math.pow(10, c-1);
+                        c--;
+                    }
+                    list.add(temp);
+                    temp = 0;
+                    count = 0;
                 }
-            } else {
-                lineChartManager.addData(data);
             }
         }
-        catch (Resources.NotFoundException e) {
-            LogUtil.e(TAG, "onGetData ==> Resources.NotFoundException");
-            binding.hrData.setText("90");
-        }
+        int hr = list.get(20);
+        int spo2 = list.get(21);
+        int tempI = list.get(22);
+        int tempF = list.get(23);
+        String temperature = tempI + "." + tempF;
+
+        hrData.setText(String.valueOf(hr));
+        spo2Data.setText(String.valueOf(spo2));
+        tempData.setText(temperature);
+
+        list.remove(list.size()-1);
+        list.remove(list.size()-1);
+        list.remove(list.size()-1);
+        list.remove(list.size()-1);
+        lineChartManager.addData(list);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

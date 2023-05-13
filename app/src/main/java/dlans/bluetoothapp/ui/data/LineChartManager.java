@@ -15,7 +15,9 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import dlans.bluetoothapp.utils.GlobalContext;
 import dlans.bluetoothapp.utils.LogUtil;
@@ -56,6 +58,26 @@ public class LineChartManager implements OnChartValueSelectedListener {
             }
             for (byte b : data) {
                 lineData.addEntry(new Entry(set.getEntryCount(), b), 0);
+                lineData.notifyDataChanged();
+            }
+            lineChart.notifyDataSetChanged();
+            lineChart.setVisibleXRangeMaximum(300);
+            lineChart.moveViewToX(lineData.getEntryCount());
+        } else {
+            throw new NullPointerException("lineChart.getData() return null");
+        }
+    }
+
+    private void addEntry(ArrayList<Integer> list) {
+        LineData lineData = lineChart.getData();
+        if (lineData != null) {
+            ILineDataSet set = lineData.getDataSetByIndex(0);
+            if (set == null) {
+                set = createSet();
+                lineData.addDataSet(set);
+            }
+            for (int i : list) {
+                lineData.addEntry(new Entry(set.getEntryCount(), i), 0);
                 lineData.notifyDataChanged();
             }
             lineChart.notifyDataSetChanged();
@@ -133,5 +155,27 @@ public class LineChartManager implements OnChartValueSelectedListener {
             lineChart.getAxisLeft().setAxisMaximum((float) MAX_DATA);
         }
         addEntry(data);
+    }
+
+    public void addData(ArrayList<Integer> list) {
+        LogUtil.d(TAG, "addData");
+
+        ArrayList<Integer> list1 = new ArrayList();
+        for (Integer i : list) {
+            list1.add(i);
+        }
+        Collections.sort(list1);
+
+        int minData = list1.get(0);
+        int maxData = list1.get(list1.size()-1);
+        if (MIN_DATA > minData) {
+            MIN_DATA = minData;
+            lineChart.getAxisLeft().setAxisMinimum((float) MIN_DATA);
+        }
+        if (MAX_DATA < maxData) {
+            MAX_DATA = maxData;
+            lineChart.getAxisLeft().setAxisMaximum((float) MAX_DATA);
+        }
+        addEntry(list);
     }
 }
